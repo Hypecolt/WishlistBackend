@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model chat {
+  id          Int         @id @default(autoincrement())
+  userId1     Int
+  userId2     Int
+  historyId   Int
+  createtime  BigInt
+  updatetime  BigInt?
+  deletetime  BigInt?
+  chathistory chathistory @relation(fields: [historyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "chat_fk0")
+  userchats   userchats[]
+
+  @@index([historyId], map: "chat_fk0")
+}
+
+model chathistory {
+  id         Int     @id @default(autoincrement())
+  userId     Int
+  message    String  @db.Char(255)
+  createtime BigInt
+  updatetime BigInt?
+  deletetime BigInt?
+  chat       chat[]
+}
+
+model group {
+  id             Int              @id @default(autoincrement())
+  owner          Int
+  wishlistId     Json
+  createtime     BigInt
+  updatetime     BigInt?
+  deletetime     BigInt?
+  groupwishlists groupwishlists[]
+  useringroup    useringroup[]
+}
+
+model groupwishlists {
+  id         Int      @id @default(autoincrement())
+  groupId    Int
+  wishlistId Int
+  createtime BigInt
+  updatetime BigInt?
+  deletetime BigInt?
+  group      group    @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "groupWishlists_fk0")
+  wishlist   wishlist @relation(fields: [wishlistId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "groupWishlists_fk1")
+
+  @@index([groupId], map: "groupWishlists_fk0")
+  @@index([wishlistId], map: "groupWishlists_fk1")
+}
+
+model items {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.Char(255)
+  details         String            @db.Char(255)
+  size            String            @db.Char(255)
+  createtime      BigInt
+  updatetime      BigInt?
+  deletetime      BigInt?
+  itemsinwishlist itemsinwishlist[]
+}
+
+model itemsinwishlist {
+  id         Int      @id @default(autoincrement())
+  wishlistId Int
+  itemId     Int
+  wishlist   wishlist @relation(fields: [wishlistId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "itemsInWishlist_fk0")
+  items      items    @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "itemsInWishlist_fk1")
+
+  @@index([wishlistId], map: "itemsInWishlist_fk0")
+  @@index([itemId], map: "itemsInWishlist_fk1")
+}
+
+model useraddress {
+  id          Int           @id
+  country     String        @db.Char(255)
+  city        String        @db.Char(255)
+  street      String        @db.Char(255)
+  zipCode     Int
+  createtime  BigInt
+  updatetime  BigInt?
+  deletetime  BigInt?
+  userdetails userdetails[]
+}
+
+model userchats {
+  id     Int   @id @default(autoincrement())
+  userId Int
+  chatId Int
+  users  users @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userChats_fk0")
+  chat   chat  @relation(fields: [chatId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userChats_fk1")
+
+  @@index([userId], map: "userChats_fk0")
+  @@index([chatId], map: "userChats_fk1")
+}
+
+model userdetails {
+  id          Int         @id
+  firstName   String      @db.Char(255)
+  lastName    String      @db.Char(255)
+  phone       Int         @unique(map: "phone")
+  dob         DateTime    @db.Date
+  addressId   Int
+  friends     Json
+  createtime  BigInt
+  updatetime  BigInt?
+  deletetime  BigInt?
+  users       users       @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userDetails_fk0")
+  useraddress useraddress @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userDetails_fk1")
+
+  @@index([addressId], map: "userDetails_fk1")
+}
+
+model useringroup {
+  id         Int     @id @default(autoincrement())
+  userid     Int
+  groupid    Int
+  createtime BigInt
+  updatetime BigInt?
+  deletetime BigInt?
+  users      users   @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userInGroup_fk0")
+  group      group   @relation(fields: [groupid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userInGroup_fk1")
+
+  @@index([userid], map: "userInGroup_fk0")
+  @@index([groupid], map: "userInGroup_fk1")
+}
+
+model users {
+  id          Int           @id @default(autoincrement())
+  username    String        @unique(map: "username") @db.Char(255)
+  email       String        @unique(map: "email") @db.Char(255)
+  password    String        @db.Char(255)
+  createtime  BigInt
+  updatetime  BigInt?
+  deletetime  BigInt?
+  userchats   userchats[]
+  userdetails userdetails?
+  useringroup useringroup[]
+}
+
+model wishlist {
+  id              Int               @id @default(autoincrement())
+  ownerId         Int
+  bought          Boolean
+  createtime      BigInt
+  updatetime      BigInt?
+  deletetime      BigInt?
+  groupwishlists  groupwishlists[]
+  itemsinwishlist itemsinwishlist[]
+}
