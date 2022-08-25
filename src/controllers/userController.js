@@ -130,7 +130,6 @@ const updateUser = async (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
   try {
-    userServices.checkUsername('Hypecsdfolt');
     res.json(await userServices.getAll());
   } catch (err) {
     console.error(`Error while getting users`);

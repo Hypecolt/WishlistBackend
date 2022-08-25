@@ -1,6 +1,3 @@
-const fs = require('fs')
-const path = require('path')
-const datastore = require('../datastore.json')
 const bcrypt = require("bcrypt");
 const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
@@ -34,9 +31,9 @@ const checkLogin = async (username, password) =>{
         id: response.id
       },
       process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
+      // {
+      //   expiresIn: "2h",
+      // }
     );
 
     return token;
@@ -54,7 +51,7 @@ const checkUsername = async (username) => {
   if(found){
     return false;
   } else {
-    return true;
+    return username;
   }
 };
 
@@ -96,35 +93,14 @@ const indexOfUser = (id) => {
 };
 
 const getAll = async () => {
+  console.log(Date.now())
   const users = await prisma.users.findMany()
   return users;
-  // let timestmp = new Date(Date.now()).toLocaleDateString("en-US").toString() + " " + new Date(Date.now()).toLocaleTimeString("ro-RO").toString();
-  // console.log(timestmp)
-  // console.log(Date.now());
-  // return JSON.parse(fs.readFileSync('./src/datastore.json'));
-  //return datastore;
 };
 
 const getUser = async (id) => {
   return filterById(id)[0];
 };
-
-// const addUser = async (userInfo) => {
-//   const newId = datastore[datastore.length - 1].id + 1;
-
-//   datastore.push({
-//     id: newId,
-//     ...userInfo,
-//   });
-
-//   try {
-//     fs.writeFileSync('./src/datastore.json', JSON.stringify(datastore))
-//     return true;
-//   } catch (error) {
-//     return false;
-//   }
-  
-// };
 
 const updateUser = async (id, userInfo) => {
   const index = indexOfUser(id);

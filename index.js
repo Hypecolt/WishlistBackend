@@ -2,6 +2,9 @@ const dotenv = require('dotenv')
 const express = require('express')
 const errorsMiddleware = require('./src/middleware/errorsMiddleware.js')
 const usersRouter = require('./src/routes/userRoutes.js')
+const profileRouter = require('./src/routes/profileRouter.js')
+const groupRouter = require('./src/routes/groupRouter.js')
+const wishlistRouter = require('./src/routes/wishlistRouter.js')
 
 dotenv.config();
 
@@ -13,6 +16,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/profile", profileRouter);
+app.use("/groups", groupRouter);
+app.use("/wishlists", wishlistRouter);
 
 app.use(errorsMiddleware);
 
