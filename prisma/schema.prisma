@@ -12,8 +12,8 @@ model chat {
   userId1     Int
   userId2     Int
   historyId   Int?
-  createtime  Float
-  updatetime  Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
   deletetime  Float?
   chathistory chathistory? @relation(fields: [historyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "chat_fk0")
   userchats   userchats[]
@@ -25,9 +25,9 @@ model chathistory {
   id         Int    @id @default(autoincrement())
   userId     Int
   message    String @db.Char(255)
-  createtime Float
-  updatetime Float?
-  deletetime Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime DateTime?
   chat       chat[]
 }
 
@@ -43,9 +43,9 @@ model group {
   owner          Int
   name           String           @unique(map: "name") @db.Char(255)
   wishlistId     Int?
-  createtime     Float
-  updatetime     Float?
-  deletetime     Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime     DateTime?
   groupwishlists groupwishlists[]
   useringroup    useringroup[]
 }
@@ -54,9 +54,9 @@ model groupwishlists {
   id         Int      @id @default(autoincrement())
   groupId    Int
   wishlistId Int
-  createtime Float
-  updatetime Float?
-  deletetime Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime DateTime?
   group      group    @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "groupWishlists_fk0")
   wishlist   wishlist @relation(fields: [wishlistId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "groupWishlists_fk1")
 
@@ -69,9 +69,9 @@ model items {
   name            String            @db.Char(255)
   details         String            @db.Char(255)
   size            String?           @db.Char(255)
-  createtime      Float
-  updatetime      Float?
-  deletetime      Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime      DateTime?
   itemsinwishlist itemsinwishlist[]
 }
 
@@ -79,9 +79,9 @@ model itemsinwishlist {
   id         Int      @id @default(autoincrement())
   wishlistId Int
   itemId     Int
-  createtime Float
-  updatetime Float?
-  deletetime Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime DateTime?
   bought     Boolean
   wishlist   wishlist @relation(fields: [wishlistId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "itemsInWishlist_fk0")
   items      items    @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "itemsInWishlist_fk1")
@@ -96,9 +96,9 @@ model useraddress {
   city        String?       @db.Char(255)
   street      String?       @db.Char(255)
   zipCode     Int?
-  createtime  Float
-  updatetime  Float?
-  deletetime  Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime  DateTime?
   userdetails userdetails[]
 }
 
@@ -122,9 +122,9 @@ model userdetails {
   dob           DateTime     @db.Date
   addressId     Int?
   friendslistId Int?
-  createtime    Float
-  updatetime    Float?
-  deletetime    Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime    DateTime?
   users         users        @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userDetails_fk0")
   useraddress   useraddress? @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userDetails_fk1")
   friendlist    friendlist?  @relation(fields: [friendslistId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userDetails_fk2")
@@ -138,9 +138,9 @@ model useringroup {
   id         Int    @id @default(autoincrement())
   userid     Int
   groupid    Int
-  createtime Float
-  updatetime Float?
-  deletetime Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime DateTime?
   users      users  @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userInGroup_fk0")
   group      group  @relation(fields: [groupid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userInGroup_fk1")
 
@@ -153,9 +153,9 @@ model users {
   username    String        @unique(map: "username") @db.Char(255)
   email       String        @unique(map: "email") @db.Char(255)
   password    String        @db.Char(255)
-  createtime  Float
-  updatetime  Float?
-  deletetime  Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime  DateTime?
   userchats   userchats[]
   userdetails userdetails[]
   useringroup useringroup[]
@@ -166,9 +166,9 @@ model wishlist {
   id              Int               @id @default(autoincrement())
   ownerId         Int
   name            String            @unique(map: "name") @db.Char(255)
-  createtime      Float
-  updatetime      Float?
-  deletetime      Float?
+  createtime  DateTime           @default(now())
+  updatetime  DateTime           @updatedAt
+  deletetime      DateTime?
   users           users             @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist_fk0")
   groupwishlists  groupwishlists[]
   itemsinwishlist itemsinwishlist[]

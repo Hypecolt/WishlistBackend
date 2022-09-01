@@ -1,18 +1,18 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const usersController = require('../controllers/userController.js')
+const authMiddleware = require('../middleware/authMiddleware.js');
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlencodedParser = bodyParser.json({ extended: false })
 
 const router = express.Router();
 
-router.get("/", usersController.getUsers);
-router.get("/:id(\\d+)", usersController.getUser);
+router.get("/all", usersController.getUsers);
+router.get("/", authMiddleware, urlencodedParser, usersController.getUser);
+router.put("/", authMiddleware, urlencodedParser, usersController.updateUser);
+router.delete("/", authMiddleware, usersController.deleteUser);
 
 router.get("/login", urlencodedParser, usersController.login);
 router.post("/register", urlencodedParser, usersController.register);
-
-router.post("/", urlencodedParser, usersController.addUser);
-router.patch("/:id(\\d+)", urlencodedParser, usersController.updateUser);
 
 module.exports = router;

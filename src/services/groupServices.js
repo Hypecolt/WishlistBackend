@@ -27,8 +27,7 @@ const createGroup = async (userid, groupname) => {
     const group = await prisma.group.create({
         data: {
           owner: userid,
-          name: groupname,
-          createtime: Date.now()
+          name: groupname
         }
     }).then((response) => {
       createUserInGroup(response.owner, response.id)

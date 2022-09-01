@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
+const uuid = require('uuid')
 
 const prisma = new PrismaClient();
 
@@ -8,13 +9,16 @@ const checkLogin = async (username, password) =>{
 
   const found = await prisma.users.findFirst({
     where:{
-      OR: [
-        {
-          username: username
-        },
-        {
-          email: username
-        }
+      AND: [
+        {OR: [
+          {
+            username: username
+          },
+          {
+            email: username
+          }
+        ]},
+        {deletetime: null}
       ]
     },
     select:{
@@ -22,8 +26,12 @@ const checkLogin = async (username, password) =>{
       password: true
     },
   }).then((response) => {
+    if(!response){
+      throw Error("User does not exist");
+    }
+    
     if(!bcrypt.compareSync(password, response.password)){
-      return "Wrong Password";
+      throw Error("Wrong Password");
     }
 
     const token = jwt.sign(
@@ -37,7 +45,7 @@ const checkLogin = async (username, password) =>{
     );
 
     return token;
-  }).catch((err) => {console.log(err); return "Wrong user!"});
+  }).catch((err) => {throw Error(err.message)});
 
   return found;
 };
@@ -64,7 +72,7 @@ const checkEmail = async (email) => {
   if(found){
     return false;
   } else {
-    return true;
+    return email;
   }
 };
 
@@ -73,12 +81,51 @@ const addUser = async (username, email, hash) => {
       data: {
         username: username,
         email: email,
-        password: hash,
-        createtime: Date.now()
+        password: hash
       }
   });
   return user;
 };
+
+const getUser = async (id) => {
+  const user = await prisma.users.findUnique({
+      where: {
+          id: id
+      }
+  })
+  return user;
+};
+
+const updateUser = async (id, username, email) => {
+  const user = await prisma.users.update({
+      where: {
+          id: id
+      },
+      data: {
+          username,
+          email
+      }
+  })
+  return user;
+};
+
+const deleteUser = async (id) => {
+  const randelete = uuid.v4();
+  const user = await prisma.users.update({
+      where: {
+          id: id
+      },
+      data:{
+        username: randelete,
+        email: randelete,
+        password: randelete,
+        deletetime: new Date(Date.now()).toISOString()
+      }
+  });
+  return user;
+};
+
+
 
 
 
@@ -93,25 +140,9 @@ const indexOfUser = (id) => {
 };
 
 const getAll = async () => {
-  console.log(Date.now())
+  console.log(new Date(Date.now()).toISOString())
   const users = await prisma.users.findMany()
   return users;
 };
 
-const getUser = async (id) => {
-  return filterById(id)[0];
-};
-
-const updateUser = async (id, userInfo) => {
-  const index = indexOfUser(id);
-
-  if (index !== -1) {
-    datastore[index] = { id: datastore[index].id, ...userInfo };
-    fs.writeFileSync('./src/datastore.json', JSON.stringify(datastore))
-    return datastore;
-  } else {
-    return "User not found";
-  }
-};
-
-module.exports = { getAll, getUser, addUser, updateUser, checkLogin, checkUsername, checkEmail };
+module.exports = { getAll, getUser, addUser, updateUser, deleteUser, checkLogin, checkUsername, checkEmail };

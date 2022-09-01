@@ -3,7 +3,8 @@ const groupServices = require('../services/groupServices.js')
 const createGroup = async (req, res, next) => {
     try {
       if (!req?.body?.groupname) {
-        throw { message: "No name provided" };
+        res.status(400).send("No name provided");
+        return;
       }
 
       const name = req.body.groupname;

@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const profileController = require('../controllers/profileController.js');
 const authMiddleware = require('../middleware/authMiddleware.js');
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlencodedParser = bodyParser.json({ extended: false })
 
 const router = express.Router();
 

@@ -4,15 +4,16 @@ const createWishlist = async (req, res, next) => {
     try {
 
         if (!req?.body?.wishlistname) {
-            throw { message: "No name provided" };
+            res.status(400).send("No name provided");
+            return;
         }
 
         const name = req.body.wishlistname;
 
         res.json(await wishlistServices.createWishlist(req.auth.id, name));
     } catch (err) {
-        console.error(`Oopsie`);
-        next(err);
+        res.status(400).send(err);
+        return;
     }
 };
 
@@ -20,9 +21,64 @@ const getWishlists = async (req, res, next) => {
     try {
       res.json(await wishlistServices.getAll(req.auth.id));
     } catch (err) {
-      console.error(`Error while getting users`);
-      next(err);
+        res.status(400).send("No wishlists found");
+        return;
     }
 };
 
-module.exports = { getWishlists, createWishlist };
+const updateWishlist = async (req, res, next) => {
+    try {
+      const id = req.auth.id
+      const wishlist = await wishlistServices.getAll(id);
+  
+      let wishlistnameAvailable;
+  
+      if (!req?.body?.name) {
+        res.status(400).send("No changes made");
+        return;
+      }
+  
+      if (!wishlist) {
+          res.status(400).send("No wishlists found");
+          return;
+      }
+  
+      if(req?.body?.name){
+        wishlistnameAvailable = await wishlistServices.checkWishlistname(req.body.name);
+      }
+  
+      if(!wishlistnameAvailable){
+        res.status(400).send("Wishlistname already in use!");
+        return;
+      }
+  
+      if(!req?.body?.wishlistid){
+        res.status(400).send("No wishlist selected!");
+        return;
+      }
+
+      const response = await wishlistServices.updateWishlist(req.body.wishlistid, req.body.name);
+      
+      res.send(response);
+    } catch (err) {
+        res.status(400).send("No wishlist found!");
+        return;
+    }
+};
+
+const deleteWishlist = async (req, res, next) => {
+    try {
+        if(!req?.body?.wishlistid){
+            res.status(400).send("No wishlist selected!");
+            return;
+        }
+
+        await wishlistServices.deleteWishlist(req.body.wishlistid);
+        res.send("Wishlist deleted");
+    } catch (err) {
+        res.status(400).send("No wishlist found!");
+        return;
+    }
+};
+
+module.exports = { getWishlists, createWishlist, updateWishlist, deleteWishlist };

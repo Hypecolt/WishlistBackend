@@ -5,11 +5,14 @@ const usersRouter = require('./src/routes/userRoutes.js')
 const profileRouter = require('./src/routes/profileRouter.js')
 const groupRouter = require('./src/routes/groupRouter.js')
 const wishlistRouter = require('./src/routes/wishlistRouter.js')
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
