@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const res = require('express/lib/response');
 
 const prisma = new PrismaClient();
 
@@ -16,14 +15,14 @@ const addItem = async (name, details, size, userId) => {
 };
 
 const getItem = async (id) => {
-    const item = await prisma.items.findUnique({
+    const item = await prisma.items.findFirst({
         where: {
             AND:[
                 {id: id},
                 {deletetime: null}
             ]
         }
-    }).catch((err) => { throw Error("Item does not exist!")})
+    }).catch((err) => { throw Error("Item does not exist!") })
     return item;
 };
 
