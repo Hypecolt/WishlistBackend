@@ -8,8 +8,8 @@ const urlencodedParser = bodyParser.json({ extended: false })
 const router = express.Router();
 
 router.post("/", authMiddleware, urlencodedParser, groupController.createGroup);
-//router.get("/", authMiddleware, profileController.getProfile);
-//router.put("/", profileController.updateProfile);
-//router.delete("/", profileController.deleteProfile);
+router.get("/", authMiddleware, groupController.getGroups);
+router.put("/", authMiddleware, urlencodedParser, groupController.updateGroup);
+router.delete("/", authMiddleware, urlencodedParser, groupController.deleteGroup);
 
 module.exports = router;
