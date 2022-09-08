@@ -27,7 +27,7 @@ const getItem = async (id) => {
 };
 
 const updateItem = async (id, name, details, size) => {
-    const item = await prisma.items.update({
+    const item = await prisma.items.updateMany({
         where: {
             AND:[
                 {id: id},
@@ -56,7 +56,7 @@ const getAll = async (id) => {
 };
 
 const deleteItem = async (id) => {
-    const item = await prisma.items.update({
+    const item = await prisma.items.updateMany({
         where: {
             AND:[
                 {id: id},

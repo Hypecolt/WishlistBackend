@@ -37,11 +37,11 @@ const addItem = async (req, res, next) => {
 const updateItem = async (req, res, next) => {
     try {
 
-      if(!req?.body?.id){
+      if(!req?.params?.id){
         res.status(400).send("No item selected");
         return;
       }
-      const id = req.body.id
+      const id = parseInt(req.params.id)
       const itemFound = await itemsServices.getItem(id);
   
       let name, details, size;
@@ -70,11 +70,11 @@ const updateItem = async (req, res, next) => {
 
 const getItem = async (req, res, next) => {
     try {
-      if (!req?.body?.id) {
+      if (!req?.params?.id) {
         throw { message: "No item selected" };
       }
   
-      const response = await itemsServices.getItem(parseInt(req.body.id));
+      const response = await itemsServices.getItem(parseInt(req.params.id));
   
       if (!response) {
         throw { message: "No item found" };
@@ -99,12 +99,12 @@ const getItems = async (req, res, next) => {
 const deleteItem = async (req, res, next) => {
     try {
 
-        if(!req?.body?.id){
+        if(!req?.params?.id){
             res.status(400).send("No item found");
             return;
         }
 
-        const item = await itemsServices.deleteItem(req.body.id);
+        const item = await itemsServices.deleteItem(parseInt(req.params.id));
         res.send(item);
 
     } catch (err) {
