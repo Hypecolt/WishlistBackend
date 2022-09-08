@@ -42,7 +42,6 @@ model group {
   id             Int              @id @default(autoincrement())
   owner          Int
   name           String           @unique(map: "name") @db.Char(255)
-  wishlistId     Int?
   createtime     DateTime         @default(now())
   updatetime     DateTime         @updatedAt
   deletetime     DateTime?

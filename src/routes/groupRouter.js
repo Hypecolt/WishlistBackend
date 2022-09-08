@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.post("/", authMiddleware, urlencodedParser, groupController.createGroup);
 router.get("/", authMiddleware, groupController.getGroups);
-router.put("/", authMiddleware, urlencodedParser, groupController.updateGroup);
-router.delete("/", authMiddleware, urlencodedParser, groupController.deleteGroup);
+router.get("/:id(\\d+)", authMiddleware, groupController.getGroup);
+router.put("/:id(\\d+)", authMiddleware, urlencodedParser, groupController.updateGroup);
+router.delete("/:id(\\d+)", authMiddleware, urlencodedParser, groupController.deleteGroup);
 
 module.exports = router;

@@ -30,7 +30,7 @@ const updateWishlist = async (req, res, next) => {
     try {
       const id = req.auth.id
       const wishlist = await wishlistServices.getAll(id);
-  
+
       let wishlistnameAvailable;
   
       if (!req?.body?.name) {
@@ -52,12 +52,12 @@ const updateWishlist = async (req, res, next) => {
         return;
       }
   
-      if(!req?.body?.wishlistid){
+      if(!req?.params?.wishlistid){
         res.status(400).send("No wishlist selected!");
         return;
       }
 
-      const response = await wishlistServices.updateWishlist(req.body.wishlistid, req.body.name);
+      const response = await wishlistServices.updateWishlist(parseInt(req.params.wishlistid), req.body.name);
       
       res.send(response);
     } catch (err) {
@@ -68,12 +68,12 @@ const updateWishlist = async (req, res, next) => {
 
 const deleteWishlist = async (req, res, next) => {
     try {
-        if(!req?.body?.wishlistid){
+        if(!req?.params?.wishlistid){
             res.status(400).send("No wishlist selected!");
             return;
         }
 
-        await wishlistServices.deleteWishlist(req.body.wishlistid);
+        await wishlistServices.deleteWishlist(parseInt(req.params.wishlistid));
         res.send("Wishlist deleted");
     } catch (err) {
         res.status(400).send("No wishlist found!");

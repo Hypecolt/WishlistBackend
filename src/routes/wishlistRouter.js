@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get("/", authMiddleware, wishlistController.getWishlists);
 router.post("/", authMiddleware, urlencodedParser, wishlistController.createWishlist);
-router.put("/", authMiddleware, urlencodedParser, wishlistController.updateWishlist);
-router.delete("/", authMiddleware, urlencodedParser, wishlistController.deleteWishlist);
+router.put("/:wishlistid(\\d+)", authMiddleware, urlencodedParser, wishlistController.updateWishlist);
+router.delete("/:wishlistid(\\d+)", authMiddleware, urlencodedParser, wishlistController.deleteWishlist);
 
 
 router.get("/manage", authMiddleware, urlencodedParser);

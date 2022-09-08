@@ -7,7 +7,7 @@ const checkNameAvailability = async (name) =>{
     where:{
         name: name
     }
-  }).catch((err) => {return false;})
+  }).catch((err) => {console.log(err); return false;})
 
   if(found){
     return true;
@@ -27,7 +27,7 @@ const createUserInGroup = async (userid, groupid) => {
 
 const createGroup = async (userid, groupname) => {
 
-    if(checkNameAvailability(groupname)){
+    if(await checkNameAvailability(groupname)){
       throw Error("Name is already taken");
     }
 
@@ -40,24 +40,41 @@ const createGroup = async (userid, groupname) => {
       createUserInGroup(response.owner, response.id)
     });
     return group;
-  };
+};
 
-  const getGroup = async (id) => {
-    const group = await prisma.group.findUnique({
-        where: {
-            id: id
-        }
-    })
-    return group;
+const getGroup = async (id) => {
+  const group = await prisma.group.findFirst({
+      where: {
+        AND:[
+          {id: id},
+          {deletetime: null}
+        ]
+      }
+  })
+  return group;
 };
 
 const getUserGroups = async (id) => {
-  const found = await prisma.useringroup.findMany({
+  const found = await prisma.group.findMany({
       where:{
-          userid: id
+        AND:[
+          {owner: id},
+          {deletetime: null}
+        ]
       },
-      include:{
-          group:true
+      select:{
+        id:true,
+        name:true,
+        owner:true,
+        useringroup:{
+          select:{
+            users:{
+              select:{
+                username:true
+              }
+            }
+          }
+        }
       }
   })
 
@@ -79,6 +96,9 @@ const deleteUserGroup = async (id, userid) =>{
         deletetime: new Date(Date.now()).toISOString()
       }
   });
+  if(!group.count){
+    throw Error("No group found");
+  }
   return group;
 }
 
@@ -88,7 +108,7 @@ const updateGroup = async (id, userid, name) => {
     throw Error("Name is already taken");
   }
 
-  const user = await prisma.group.updateMany({
+  const group = await prisma.group.updateMany({
       where: {
         AND:[
           {id: id},
@@ -100,7 +120,7 @@ const updateGroup = async (id, userid, name) => {
           name: name
       }
   })
-  return user;
+  return group;
 };
 
 module.exports = {createGroup, getUserGroups, deleteUserGroup, updateGroup, getGroup};

@@ -73,7 +73,7 @@ const register = async (req, res, next) => {
 
     res.json(newUser);
   } catch (err) {
-    console.error(`Error while getting users`);
+    res.send(500);
     next(err);
   }
 };

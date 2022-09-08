@@ -11,17 +11,26 @@ const createGroup = async (req, res, next) => {
 
       const response = await groupServices.createGroup(req.auth.id, name);
 
-      res.json(response);
+      res.send("Group created successfully!");
     } catch (err) {
-      next(err);
+      res.status(500);
+        next(err);
     }
 };
 
 const getGroups = async (req, res, next) => {
   try {
-    res.json(await groupServices.getUserGroups(req.auth.id));
+
+    const groups = await groupServices.getUserGroups(req.auth.id);
+
+    if(groups.length == 0){
+      res.json("User has no groups");
+    } else {
+      res.json(groups);
+    }
   } catch (err) {
-    console.error(`Error while getting users`);
+    console.error(err);
+    res.status(500);
     next(err);
   }
 };
@@ -29,17 +38,18 @@ const getGroups = async (req, res, next) => {
 const deleteGroup = async (req, res, next) => {
   try {
 
-      if (!req?.body?.groupid) {
+      if (!req?.params?.id) {
         res.status(400).send("No group selected");
         return;
       }
 
-      const group = await groupServices.deleteUserGroup(req.body.groupid, req.auth.id);
+      const id = parseInt(req.params.id);
+
+      await groupServices.deleteUserGroup(id, req.auth.id);
       
-      res.send(group);
+      res.send("Group deleted successfully!");
   } catch (err) {
-    console.log(err);
-    res.status(400).send("No changes made");
+    res.status(400).send(err.message);
     return;
   }
 };
@@ -53,24 +63,46 @@ const updateGroup = async (req, res, next) => {
       return;
     }
 
-    if (!req?.body?.groupid) {
+    if (!req?.params?.id) {
         res.status(400).send("No group selected");
         return;
     }
 
-    const group = await groupServices.getGroup(req.body.groupid);
+    const id = parseInt(req.params.id);
+
+    const group = await groupServices.getGroup(id);
 
     if (!group) {
       res.status(400).send("No group found");
       return;
     }
 
-    await groupServices.updateGroup(req.body.groupid, req.auth.id, req.body.groupname);
-    
-    res.send("Group updated");
+    await groupServices.updateGroup(id, req.auth.id, req.body.groupname);
+
+    res.send("Group updated successfully!");
   } catch (err) {
+    res.status(500);
       next(err);
   }
 };
 
-module.exports = {createGroup, getGroups, deleteGroup, updateGroup};
+const getGroup = async (req, res, next) => {
+  try {
+    if (!req?.params?.id) {
+      throw { message: "No parameter provided" };
+    }
+
+    const response = await groupServices.getGroup(parseInt(req.params.id));
+
+    if (!response) {
+      throw { message: "No group found" };
+    }
+
+    res.json(response);
+  } catch (err) {
+    res.status(500);
+    next(err);
+  }
+};
+
+module.exports = {createGroup, getGroups, getGroup, deleteGroup, updateGroup};
