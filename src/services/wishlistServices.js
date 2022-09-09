@@ -49,6 +49,20 @@ const getAll = async (id) => {
     return found;
 }
 
+const getWishlist = async (id, ownerId) => {
+    const found = await prisma.wishlist.findFirst({
+        where:{
+            AND:[
+                {id:id},
+                {ownerId: ownerId},
+                {deletetime: null}
+            ]
+        }
+    }).catch((err) => { return false; })
+
+    return found;
+}
+
 const updateWishlist = async (id, name) => {
     const wishlist = await prisma.wishlist.update({
         where: {
@@ -73,4 +87,4 @@ const deleteWishlist = async (id) => {
     return wishlist;
 };
 
-module.exports = { getAll, createWishlist, updateWishlist, checkWishlistname, deleteWishlist }
+module.exports = { getAll, createWishlist, updateWishlist, checkWishlistname, deleteWishlist, getWishlist }

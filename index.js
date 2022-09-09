@@ -6,6 +6,8 @@ const profileRouter = require('./src/routes/profileRouter.js')
 const groupRouter = require('./src/routes/groupRouter.js')
 const wishlistRouter = require('./src/routes/wishlistRouter.js')
 const itemsRouter = require('./src/routes/itemsRouter.js')
+const itemToWishlistRouter = require('./src/routes/itemToWishlistRouter.js')
+const wishlistToGroupRouter = require('./src/routes/wishlistToGroupRouter.js')
 const usersServices = require('./src/controllers/userController.js')
 const cors = require('cors');
 const bodyParser = require('body-parser')
@@ -28,6 +30,8 @@ app.use("/profile", profileRouter);
 app.use("/groups", groupRouter);
 app.use("/wishlists", wishlistRouter);
 app.use("/items", itemsRouter);
+app.use("/wishlists/:wishlistid(\\d+)/items", itemToWishlistRouter);
+app.use("/groups/:groupid(\\d+)/wishlist", wishlistToGroupRouter);
 app.use("/login", urlencodedParser, usersServices.login);
 app.use("/register", urlencodedParser, usersServices.register);
 

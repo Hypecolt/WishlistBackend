@@ -2,6 +2,17 @@ const uuid = require('uuid')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const removeUsersFromGroup = async (groupid) => {
+  const removed = await prisma.useringroup.updateMany({
+    where:{
+      groupid:groupid
+    },
+    data:{
+      deletetime: new Date(Date.now()).toISOString()
+    }
+  })
+}
+
 const checkNameAvailability = async (name) =>{
   const found = await prisma.group.findUnique({
     where:{
@@ -50,7 +61,7 @@ const getGroup = async (id) => {
           {deletetime: null}
         ]
       }
-  })
+  }).catch((err) => { return false; })
   return group;
 };
 
@@ -99,6 +110,7 @@ const deleteUserGroup = async (id, userid) =>{
   if(!group.count){
     throw Error("No group found");
   }
+  removeUsersFromGroup(id);
   return group;
 }
 

@@ -13,11 +13,7 @@ router.post("/", authMiddleware, urlencodedParser, wishlistController.createWish
 router.put("/:wishlistid(\\d+)", authMiddleware, urlencodedParser, wishlistController.updateWishlist);
 router.delete("/:wishlistid(\\d+)", authMiddleware, urlencodedParser, wishlistController.deleteWishlist);
 
-
-router.get("/manage", authMiddleware, urlencodedParser);
-router.get("/manage/all", authMiddleware, urlencodedParser, itemToWishlistController.getItemsInWishlist);
-router.post("/manage", authMiddleware, urlencodedParser, itemToWishlistController.addItemToWishlist);
-router.put("/manage", authMiddleware, urlencodedParser, itemToWishlistController.updateItemFromWishlist);
-router.delete("/manage", authMiddleware, urlencodedParser, itemToWishlistController.deleteItemFromWishlist);
+// POST groups/{groupId}/wishlist
+// DELETE groups/{groupId}/wishlist/{wishlistId}
 
 module.exports = router;

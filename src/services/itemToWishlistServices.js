@@ -2,6 +2,18 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
+//check wishlist exists
+const checkWishlistExists = async (wishlistid) => {
+    const found = await prisma.wishlist.findUnique({
+      where:{
+        id: wishlistid
+      },
+    }).catch((err) => {return false; })
+    if(found){
+      return true;
+    }
+};
+
 //add item to wishlist
 const addItemToWishlist = async (wishlistId, itemId) => {
     const item = await prisma.itemsinwishlist.create({
@@ -68,4 +80,4 @@ const updateItemFromWishlist = async (wishlistId, itemId) => {
     return item;
 };
 
-module.exports = { addItemToWishlist, getItemsInWishlist, deleteItemFromWishlist, updateItemFromWishlist };
+module.exports = { addItemToWishlist, getItemsInWishlist, deleteItemFromWishlist, updateItemFromWishlist, checkWishlistExists };

@@ -37,15 +37,24 @@ const addItemToWishlist = async (req, res, next) => {
 //get items in wishlist
 const getItemsInWishlist = async (req, res, next) => {
     try {
-        if (!req?.body?.id) {
+
+        if (!req?.params?.wishlistid) {
             res.status(400).send("No wishlist selected");
             return;
         }
+        
+        const wishlistid = parseInt(req.params.wishlistid);
 
-        const query = await itemToWishlistServices.getItemsInWishlist(req.body.id)
+        if(!await itemToWishlistServices.checkWishlistExists(wishlistid)){
+          res.status(400).send("No wishlist found");
+          return;
+        }
+
+        const query = await itemToWishlistServices.getItemsInWishlist(wishlistid)
 
         res.json(query);
     } catch (err) {
+      res.status(500)
       console.error(`Error while getting users`);
       next(err);
     }
