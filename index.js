@@ -33,7 +33,7 @@ app.use("/wishlists", wishlistRouter);
 app.use("/items", itemsRouter);
 app.use("/wishlists/:wishlistid(\\d+)/items", itemToWishlistRouter);
 app.use("/groups/:groupid(\\d+)/wishlist", wishlistToGroupRouter);
-app.use("/groups/:groupid(\\d+)/invite", invitationsRouter);
+app.use("/groups/:groupid(\\d+)", invitationsRouter);
 app.use("/login", urlencodedParser, usersServices.login);
 app.use("/register", urlencodedParser, usersServices.register);
 

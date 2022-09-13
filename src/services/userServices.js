@@ -131,13 +131,6 @@ const deleteUser = async (id) => {
 
 
 //
-const filterById = (id) => {
-  return datastore.filter((user) => user.id === id);
-};
-
-const indexOfUser = (id) => {
-  return datastore.indexOf(filterById(id)[0]);
-};
 
 const getAll = async () => {
   console.log(new Date(Date.now()).toISOString())

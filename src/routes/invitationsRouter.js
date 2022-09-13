@@ -7,10 +7,10 @@ const urlencodedParser = bodyParser.json({ extended: false })
 
 const router = express.Router({mergeParams:true});
 
-router.get("/", authMiddleware, invitationsController.sendMail);
-router.post("/", authMiddleware, invitationsController.createInvite);
+router.get("/invite", authMiddleware, urlencodedParser, invitationsController.sendInvite);
+router.post("/invite", authMiddleware, invitationsController.createInvite);
+router.delete("/invite", authMiddleware, invitationsController.deleteInvite);
 
-// POST groups/{groupId}/wishlist
-// DELETE groups/{groupId}/wishlist/{wishlistId}
+router.get("/join/:invitationcode", authMiddleware, invitationsController.acceptInvite);
 
 module.exports = router;

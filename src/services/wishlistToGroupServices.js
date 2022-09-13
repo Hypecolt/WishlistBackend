@@ -9,16 +9,18 @@ const checkUserInGroup = async (userid, groupid) => {
         throw Error("No group found");
     }
 
-    const found = await prisma.useringroup.findFirst({
+    const found = await prisma.useringroup.findFirstOrThrow({
         where:{
             AND:[
                 {userid: userid},
                 {groupid: groupid}
             ]
         }
-    }).catch((err) => { throw Error("User is not in group") })
+    }).catch((err) => {return false; throw Error("User is not in group") })
 
-    return true;
+    if(found){
+        return true;
+    }
 
 };
 
@@ -91,7 +93,9 @@ const addWishlistToGroup = async (groupid, wishlistid, userid) =>{
         throw Error("No wishlist found");
     }
 
-    await checkUserInGroup(userid, groupid);
+    if(!await checkUserInGroup(userid, groupid)){
+        throw Error("User is not in group");
+    }
 
     if(await checkWishlistInGroup(groupid, wishlistid)){
         throw Error("Wishlist already in group");
@@ -113,7 +117,9 @@ const removeWishlistFromGroup = async (groupid, wishlistid, userid) => {
         throw Error("No wishlist founsdfd");
     }
 
-    await checkUserInGroup(userid, groupid);
+    if(!await checkUserInGroup(userid, groupid)){
+        throw Error("User is not in group");
+    }
 
     if(!await checkWishlistInGroup(groupid, wishlistid)){
         throw Error("Wishlist not in group");

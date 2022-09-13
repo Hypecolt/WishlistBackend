@@ -10,19 +10,41 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = async (req, res, next) => {
+const sendInvite = async (req, res, next) => {
     
     try {
+
+        if(!req?.params?.groupid){
+            res.status(400).send("No group selected");
+            return;
+        }
+
+        if(!req?.body?.toinvite){
+            res.status(400).send("No person invited");
+            return;
+        }
+
         const groupid = parseInt(req.params.groupid);
         
+        if(!await groupServices.getGroup(groupid)){
+            res.status(400).send("No group found");
+            return;
+        }
+
         const group = await groupServices.getGroup(groupid);
         console.log(group.name)
         const code = await invitationsServices.getInviteCode(req.auth.id, groupid);
+        
+        if(!code){
+            res.status(400).send("Group has no invite link!");
+            return;
+        }
+
         const link = 'http://localhost:3000/groups/' + req.params.groupid + '/join/' + code.code;
 
         var mailOptions = {
             from: process.env.EMAIL,
-            to: 'ant.alex97@yahoo.com',
+            to: req.body.toinvite,
             subject: 'Join the "' + group.name + '" group',
             text: 'You have been invited to join ' + group.name + '.\nPlease use the following link:\n' + link
         };
@@ -36,7 +58,7 @@ const sendMail = async (req, res, next) => {
         });
 
         console.log("mail sent");
-        res.send("mail sent");
+        res.send(link);
 
     }
     catch (err){
@@ -45,9 +67,20 @@ const sendMail = async (req, res, next) => {
     }
 }
 
-const createInvite = async (req, res, next) =>{
+const createInvite = async (req, res, next) => {
     try {
+        if(!req?.params?.groupid){
+            res.status(400).send("No group selected");
+            return;
+        }
+
         const code = await invitationsServices.createInvite(req.auth.id, parseInt(req.params.groupid));
+
+        if(!code){
+            res.status(500);
+            return;
+        }
+
         const link = 'http://localhost:3000/groups/' + req.params.groupid + '/join/' + code.code;
         res.send(link);
     } catch (err) {
@@ -56,4 +89,36 @@ const createInvite = async (req, res, next) =>{
     }
 }
 
-module.exports = { sendMail, createInvite }
+const acceptInvite = async (req, res, next) => {
+    try {
+
+        if(!req?.params?.invitationcode){
+            res.status(400).send("No invitation code provided");
+            return;
+        }
+
+        const accepted = await invitationsServices.acceptInvite(req.auth.id, req.params.invitationcode);
+        console.log(accepted);
+        res.send(accepted);
+    } catch (err) {
+        res.status(400).send(err.message);
+        return;
+    }
+}
+
+const deleteInvite = async (req, res, next) => {
+    try {
+        if(!req?.params?.groupid){
+            res.status(400).send("No group selected");
+            return;
+        }
+
+        const deleted = await invitationsServices.deleteInvite(req.auth.id, parseInt(req.params.groupid))
+        res.send(deleted)
+    } catch (err) {
+        res.status(400).send(err.message);
+        return;
+    }
+}
+
+module.exports = { sendInvite, createInvite, acceptInvite, deleteInvite }
