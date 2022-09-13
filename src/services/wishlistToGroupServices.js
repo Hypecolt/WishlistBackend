@@ -134,4 +134,4 @@ const removeWishlistFromGroup = async (groupid, wishlistid, userid) => {
     return wishlist;
 };
 
-module.exports = { getGroupWishlists, addWishlistToGroup, removeWishlistFromGroup };
+module.exports = { getGroupWishlists, addWishlistToGroup, removeWishlistFromGroup, checkUserInGroup };

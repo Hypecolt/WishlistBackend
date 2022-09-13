@@ -46,6 +46,7 @@ model group {
   updatetime     DateTime         @updatedAt
   deletetime     DateTime?
   groupwishlists groupwishlists[]
+  invites  invites[]
   useringroup    useringroup[]
 }
 
@@ -178,4 +179,16 @@ model wishlist {
   itemsinwishlist itemsinwishlist[]
 
   @@index([ownerId], map: "wishlist_fk0")
+}
+
+model invites {
+  id         Int      @id @default(autoincrement())
+  code       String   @unique(map: "code") @db.Char(255)
+  groupid    Int
+  createtime DateTime @default(now())
+  updatetime DateTime @updatedAt
+  deletetime DateTime? 
+  group      group    @relation(fields: [groupid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "invites_fk0")
+
+  @@index([groupid], map: "invites_fk0")
 }
