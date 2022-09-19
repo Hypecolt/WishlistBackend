@@ -36,6 +36,7 @@ app.use("/groups/:groupid(\\d+)/wishlist", wishlistToGroupRouter);
 app.use("/groups/:groupid(\\d+)", invitationsRouter);
 app.use("/login", urlencodedParser, usersServices.login);
 app.use("/register", urlencodedParser, usersServices.register);
+app.use("/profile", profileRouter);
 
 app.use(errorsMiddleware);
 

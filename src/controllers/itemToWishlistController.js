@@ -69,12 +69,12 @@ const deleteItemFromWishlist = async (req, res, next) => {
             return;
           }
       
-        if (!req?.body?.itemId) {
+        if (!req?.params?.itemid) {
         res.status(400).send("No item selected");
         return;
         }
 
-        const item = await itemToWishlistServices.deleteItemFromWishlist(req.body.id, req.body.itemId);
+        const item = await itemToWishlistServices.deleteItemFromWishlist(req.body.id, req.params.itemid);
         res.send(item);
 
     } catch (err) {
@@ -92,12 +92,12 @@ const updateItemFromWishlist = async (req, res, next) => {
             return;
           }
       
-        if (!req?.body?.itemId) {
+        if (!req?.params?.itemid) {
         res.status(400).send("No item selected");
         return;
         }
 
-        const item = await itemToWishlistServices.updateItemFromWishlist(req.body.id, req.body.itemId);
+        const item = await itemToWishlistServices.updateItemFromWishlist(req.body.id, req.params.itemid);
         res.send(item);
 
     } catch (err) {

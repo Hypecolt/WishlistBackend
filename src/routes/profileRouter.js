@@ -8,7 +8,7 @@ const urlencodedParser = bodyParser.json({ extended: false })
 const router = express.Router();
 
 router.get("/", authMiddleware, profileController.getProfile);
-//router.put("/", profileController.updateProfile);
-//router.delete("/", profileController.deleteProfile);
+router.post("/", authMiddleware, urlencodedParser, profileController.createProfile);
+router.put("/", authMiddleware, urlencodedParser, profileController.updateProfile);
 
 module.exports = router;

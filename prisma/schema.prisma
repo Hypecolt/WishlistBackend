@@ -118,11 +118,11 @@ model userchats {
 }
 
 model userdetails {
-  id            Int          @id
+  id            Int          @id @default(autoincrement())
   userId        Int
   firstName     String       @db.Char(255)
   lastName      String       @db.Char(255)
-  phone         Int          @unique(map: "phone")
+  phone         String       @unique(map: "phone") @db.Char(255)
   dob           DateTime     @db.Date
   addressId     Int?
   friendslistId Int?

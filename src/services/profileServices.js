@@ -2,77 +2,50 @@ const groupServices = require('./groupServices.js');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const getUsername = async (id) => {
-    const found = await prisma.users.findUnique({
-        where:{
-            id: id
-        },
-        select:{
-            username: true
-        }
-    })
+const createProfile = async (id, firstName, lastName, phoneNumber, dob) => {
 
-    return found;
+    const profile = await prisma.userdetails.create({
+        data:{
+            userId: id,
+            firstName: firstName,
+            lastName: lastName,
+            phone: phoneNumber,
+            dob: dob
+        }
+    }).catch((err) => { throw Error("Phone number already in use") })
+
+    return profile;
 }
 
-const checkUserdetails = async (id) => {
-    const found = await prisma.userdetails.findUnique({
+const getProfile = async (id) => {
+    
+    const profile = await prisma.userdetails.findFirstOrThrow({
         where:{
-            id: id
+            userId: id
         },
         select:{
             firstName: true,
             lastName: true,
-            dob: true,
-            friends: true,
-            addressId: true
+            phone: true,
+            dob: true
         }
-    })
-    //json cu grupuri, wishlist, friends, dob, country, city
-    return found ? true : false;
+    }).catch((err) => { throw Error("User has no details") })
+
+    return profile;
 }
 
-const getUseraddress = async (id) => {
-    const found = await prisma.useraddress.findUnique({
+const updateProfile = async (id, firstName, lastName, phone) => {
+
+    await prisma.userdetails.updateMany({
         where:{
-            id: id
+            userId: id
         },
-        select:{
-            country: true,
-            city: true
+        data:{
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone
         }
-    })
-
-    return found;
+    }).catch((err) => { throw Error("Phone number already in use") })
 }
 
-const getProfile = async (id) => {
-    //get data for payload
-    const groups = await Promise.resolve(groupServices.getUserGroups(id))
-    const username = await Promise.resolve(getUsername(id))
-    
-    //create payload to send
-    const payload = {
-        username: username.username,
-        dob: 2,
-        country: "t",
-        city:"t",
-        groups:[],
-        wishlists:[],
-        friends:[]
-
-    }
-
-    //add user groups to payload
-    for( let i = 0 ; i < Object.keys(groups).length ; i++ ){
-        payload['groups'].push({
-            owner: groups[i].group.owner,
-            name: groups[i].group.name
-        })
-    }
-
-    console.log(payload)
-    return groupServices.getUserGroups(id);
-}
-
-module.exports = {getUsername, checkUserdetails, getUseraddress, getProfile};
+module.exports = { createProfile, updateProfile, getProfile};

@@ -13,7 +13,7 @@ const router = express.Router({mergeParams:true});
 router.get("/", authMiddleware, urlencodedParser, itemToWishlistController.getItemsInWishlist);
 router.get("/:itemid(\\d+)", authMiddleware, urlencodedParser);
 router.post("/", authMiddleware, urlencodedParser, itemToWishlistController.addItemToWishlist);
-router.put("/", authMiddleware, urlencodedParser, itemToWishlistController.updateItemFromWishlist);
-router.delete("/", authMiddleware, urlencodedParser, itemToWishlistController.deleteItemFromWishlist);
+router.put("/:itemid(\\d+)", authMiddleware, urlencodedParser, itemToWishlistController.updateItemFromWishlist);
+router.delete("/:itemid(\\d+)", authMiddleware, urlencodedParser, itemToWishlistController.deleteItemFromWishlist);
 
 module.exports = router;

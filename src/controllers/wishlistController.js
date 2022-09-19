@@ -10,7 +10,8 @@ const createWishlist = async (req, res, next) => {
 
         const name = req.body.wishlistname;
 
-        res.json(await wishlistServices.createWishlist(req.auth.id, name));
+        await wishlistServices.createWishlist(req.auth.id, name)
+        res.json("Wishlist created successfully");
     } catch (err) {
         res.status(400).send(err);
         return;
