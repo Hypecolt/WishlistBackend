@@ -98,7 +98,7 @@ const updateItemFromWishlist = async (req, res, next) => {
         }
 
         const item = await itemToWishlistServices.updateItemFromWishlist(req.body.id, req.params.itemid);
-        res.send(item);
+        res.send("Item bought");
 
     } catch (err) {
       res.status(400).send(err.message);
