@@ -6,7 +6,7 @@ A wishlist API developed for the Javascript Bootcamp organised by Softbinator Te
 
 ## Documentation
 
-For the first setup it is required to run the `npx prisma db push` command in the terminal.
+For the first setup it is required to run the `npx prisma db push` command in the terminal, and `CREATE DATABASE <database_name>;` in MySQL Workbench.
 
 You are required to have a `.env` file in the same directory with `index.js` with the following structure:
 
