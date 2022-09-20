@@ -756,6 +756,9 @@
                     <li data-group="Default" data-name="addWishlistToGroup" class="">
                       <a href="#api-Default-addWishlistToGroup">addWishlistToGroup</a>
                     </li>
+                    <li data-group="Default" data-name="buyItemInWishlist" class="">
+                      <a href="#api-Default-buyItemInWishlist">buyItemInWishlist</a>
+                    </li>
                     <li data-group="Default" data-name="createInviteInGroup" class="">
                       <a href="#api-Default-createInviteInGroup">createInviteInGroup</a>
                     </li>
@@ -806,6 +809,9 @@
                     </li>
                     <li data-group="Default" data-name="getItemsInWishlist" class="">
                       <a href="#api-Default-getItemsInWishlist">getItemsInWishlist</a>
+                    </li>
+                    <li data-group="Default" data-name="getNotifications" class="">
+                      <a href="#api-Default-getNotifications">getNotifications</a>
                     </li>
                     <li data-group="Default" data-name="getUser" class="">
                       <a href="#api-Default-getUser">getUser</a>
@@ -1900,6 +1906,364 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-addWishlistToGroup-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - bad input parameter </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-buyItemInWishlist">
+                      <article id="api-Default-buyItemInWishlist-0" data-group="User" data-name="buyItemInWishlist" data-version="0">
+                        <div class="pull-left">
+                          <h1>buyItemInWishlist</h1>
+                          <p>get item in wishlist of logged user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/wishlists/{wishlistid}/items/{itemid}/purchase</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-buyItemInWishlist-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-buyItemInWishlist-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-buyItemInWishlist-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-buyItemInWishlist-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-buyItemInWishlist-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/Hypecolt/Wishlist/1.0.0/wishlists/{wishlistid}/items/{itemid}/purchase"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        String authorization = authorization_example; // String | jwt token
+        Integer wishlistid = 56; // Integer | 
+        Integer itemid = 56; // Integer | 
+        try {
+            Object result = apiInstance.buyItemInWishlist(authorization, wishlistid, itemid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#buyItemInWishlist");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        String authorization = authorization_example; // String | jwt token
+        Integer wishlistid = 56; // Integer | 
+        Integer itemid = 56; // Integer | 
+        try {
+            Object result = apiInstance.buyItemInWishlist(authorization, wishlistid, itemid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#buyItemInWishlist");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // jwt token
+Integer *wishlistid = 56; // 
+Integer *itemid = 56; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+// get item in wishlist of logged user
+[apiInstance buyItemInWishlistWith:authorization
+    wishlistid:wishlistid
+    itemid:itemid
+              completionHandler: ^(Object output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var WishlistApi = require('wishlist_api');
+
+var api = new WishlistApi.DefaultApi()
+var authorization = authorization_example; // {{String}} jwt token
+var wishlistid = 56; // {{Integer}} 
+var itemid = 56; // {{Integer}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.buyItemInWishlist(authorization, wishlistid, itemid, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-buyItemInWishlist-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class buyItemInWishlistExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var authorization = authorization_example;  // String | jwt token
+            var wishlistid = 56;  // Integer | 
+            var itemid = 56;  // Integer | 
+
+            try
+            {
+                // get item in wishlist of logged user
+                Object result = apiInstance.buyItemInWishlist(authorization, wishlistid, itemid);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.buyItemInWishlist: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$authorization = authorization_example; // String | jwt token
+$wishlistid = 56; // Integer | 
+$itemid = 56; // Integer | 
+
+try {
+    $result = $api_instance->buyItemInWishlist($authorization, $wishlistid, $itemid);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->buyItemInWishlist: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $authorization = authorization_example; # String | jwt token
+my $wishlistid = 56; # Integer | 
+my $itemid = 56; # Integer | 
+
+eval { 
+    my $result = $api_instance->buyItemInWishlist(authorization => $authorization, wishlistid => $wishlistid, itemid => $itemid);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->buyItemInWishlist: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-buyItemInWishlist-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+authorization = authorization_example # String | jwt token
+wishlistid = 56 # Integer | 
+itemid = 56 # Integer | 
+
+try: 
+    # get item in wishlist of logged user
+    api_response = api_instance.buy_item_in_wishlist(authorization, wishlistid, itemid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->buyItemInWishlist: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">wishlistid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_buyItemInWishlist_wishlistid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      Integer
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                                  <tr><td style="width:150px;">itemid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_buyItemInWishlist_itemid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      Integer
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">Authorization*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_buyItemInWishlist_authorization">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          jwt token
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - bought item </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-buyItemInWishlist-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-buyItemInWishlist-200-schema">
+                                  <div id='responses-buyItemInWishlist-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-buyItemInWishlist-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-buyItemInWishlist-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-buyItemInWishlist-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -7572,6 +7936,301 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
+                    <div id="api-Default-getNotifications">
+                      <article id="api-Default-getNotifications-0" data-group="User" data-name="getNotifications" data-version="0">
+                        <div class="pull-left">
+                          <h1>getNotifications</h1>
+                          <p>get item in wishlist of logged user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/notifications</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-getNotifications-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-getNotifications-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-getNotifications-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-getNotifications-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-getNotifications-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-getNotifications-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-getNotifications-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/Hypecolt/Wishlist/1.0.0/notifications"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-getNotifications-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        String authorization = authorization_example; // String | jwt token
+        try {
+            Object result = apiInstance.getNotifications(authorization);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#getNotifications");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-getNotifications-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        String authorization = authorization_example; // String | jwt token
+        try {
+            Object result = apiInstance.getNotifications(authorization);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#getNotifications");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-getNotifications-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // jwt token
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+// get item in wishlist of logged user
+[apiInstance getNotificationsWith:authorization
+              completionHandler: ^(Object output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var WishlistApi = require('wishlist_api');
+
+var api = new WishlistApi.DefaultApi()
+var authorization = authorization_example; // {{String}} jwt token
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getNotifications(authorization, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-getNotifications-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getNotificationsExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var authorization = authorization_example;  // String | jwt token
+
+            try
+            {
+                // get item in wishlist of logged user
+                Object result = apiInstance.getNotifications(authorization);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.getNotifications: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$authorization = authorization_example; // String | jwt token
+
+try {
+    $result = $api_instance->getNotifications($authorization);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->getNotifications: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $authorization = authorization_example; # String | jwt token
+
+eval { 
+    my $result = $api_instance->getNotifications(authorization => $authorization);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->getNotifications: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-getNotifications-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+authorization = authorization_example # String | jwt token
+
+try: 
+    # get item in wishlist of logged user
+    api_response = api_instance.get_notifications(authorization)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->getNotifications: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">Authorization*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getNotifications_authorization">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          jwt token
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - got notification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getNotifications-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getNotifications-200-schema">
+                                  <div id='responses-getNotifications-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getNotifications-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getNotifications-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getNotifications-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - bad input parameter </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Default-getUser">
                       <article id="api-Default-getUser-0" data-group="User" data-name="getUser" data-version="0">
                         <div class="pull-left">
@@ -8835,7 +9494,7 @@ except ApiException as e:
 </p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/login</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/login</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -8855,7 +9514,7 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Default-login-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 "https://virtserver.swaggerhub.com/Hypecolt/Wishlist/1.0.0/login?login=&password="</code></pre>
                           </div>
