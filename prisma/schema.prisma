@@ -46,7 +46,7 @@ model group {
   updatetime     DateTime         @updatedAt
   deletetime     DateTime?
   groupwishlists groupwishlists[]
-  invites  invites[]
+  invites        invites[]
   useringroup    useringroup[]
 }
 
@@ -153,18 +153,19 @@ model useringroup {
 }
 
 model users {
-  id          Int           @id @default(autoincrement())
-  username    String        @unique(map: "username") @db.Char(255)
-  email       String        @unique(map: "email") @db.Char(255)
-  password    String        @db.Char(255)
-  createtime  DateTime      @default(now())
-  updatetime  DateTime      @updatedAt
-  deletetime  DateTime?
-  items       items[]
-  userchats   userchats[]
-  userdetails userdetails[]
-  useringroup useringroup[]
-  wishlist    wishlist[]
+  id            Int             @id @default(autoincrement())
+  username      String          @unique(map: "username") @db.Char(255)
+  email         String          @unique(map: "email") @db.Char(255)
+  password      String          @db.Char(255)
+  createtime    DateTime        @default(now())
+  updatetime    DateTime        @updatedAt
+  deletetime    DateTime?
+  items         items[]
+  notifications notifications[]
+  userchats     userchats[]
+  userdetails   userdetails[]
+  useringroup   useringroup[]
+  wishlist      wishlist[]
 }
 
 model wishlist {
@@ -182,13 +183,25 @@ model wishlist {
 }
 
 model invites {
-  id         Int      @id @default(autoincrement())
-  code       String   @unique(map: "code") @db.Char(255)
+  id         Int       @id @default(autoincrement())
+  code       String    @unique(map: "code") @db.Char(255)
   groupid    Int
-  createtime DateTime @default(now())
-  updatetime DateTime @updatedAt
-  deletetime DateTime? 
-  group      group    @relation(fields: [groupid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "invites_fk0")
+  createtime DateTime  @default(now())
+  updatetime DateTime  @updatedAt
+  deletetime DateTime?
+  group      group     @relation(fields: [groupid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "invites_fk0")
 
   @@index([groupid], map: "invites_fk0")
+}
+
+model notifications {
+  id         Int      @id @default(autoincrement())
+  message    String   @db.Char(255)
+  userid     Int
+  createtime DateTime  @default(now())
+  updatetime DateTime  @updatedAt
+  deletetime DateTime?
+  users      users    @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notifications_fk0")
+
+  @@index([userid], map: "notifications_fk0")
 }

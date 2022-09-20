@@ -10,12 +10,15 @@ const itemToWishlistRouter = require('./src/routes/itemToWishlistRouter.js')
 const wishlistToGroupRouter = require('./src/routes/wishlistToGroupRouter.js')
 const invitationsRouter = require('./src/routes/invitationsRouter.js')
 const usersServices = require('./src/controllers/userController.js')
+const watcher = require('./src/controllers/notificationsController.js');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 
 const urlencodedParser = bodyParser.json({ extended: false })
 
 dotenv.config();
+
+watcher.watcher();
 
 const app = express();
 const port = process.env.PORT || 3000;
