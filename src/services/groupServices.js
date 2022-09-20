@@ -61,20 +61,20 @@ const getGroup = async (id) => {
           {deletetime: null}
         ]
       },
-      // select:{
-      //   owner:true,
-      //   name:true,
-      //   useringroup:{
-      //     select:{
-      //       users:{
-      //         select:{
-      //           username: true,
-      //           createtime: true
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
+      select:{
+        owner:true,
+        name:true,
+        useringroup:{
+          select:{
+            users:{
+              select:{
+                username: true,
+                createtime: true
+              }
+            }
+          }
+        }
+      }
   }).catch((err) => { return false; })
   return group;
 };

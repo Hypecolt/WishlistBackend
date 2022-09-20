@@ -77,4 +77,67 @@ const resetNotification = async (id) =>{
     return deleted;
 }
 
-module.exports = { checkDob };
+const getNotification = async (id) => {
+
+    const groupId = await prisma.notifications.findMany({
+        where:{
+            deletetime: null
+        },
+        select:{
+            message: true,
+            users:{
+                select:{
+                    useringroup:{
+                        where:{
+                            deletetime: null
+                        },
+                        select:{
+                            groupid: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    let test;
+    for(let i = 0 ; i < groupId.length ; i++){
+        try {
+            if(groupId[i].users.useringroup[0].groupid){
+                test = await prisma.useringroup.findMany({
+                    where:{
+                        AND:[
+                            {groupid: groupId[i].users.useringroup[0].groupid},
+                            {userid: id},
+                            {deletetime: null}
+                        ]
+                    },
+                    select:{
+                        userid: true
+                    }
+                })
+
+                addNotification(id, groupId[i].message)
+
+            }
+        } catch (error) {
+            
+        }
+    }
+
+    const getNotif = await prisma.notifications.findMany({
+        where:{
+            AND:[
+                {userid: id},
+                {deletetime: null}
+            ]
+        },
+        select:{
+            message: true
+        }
+    })
+
+    return getNotif;
+}
+
+module.exports = { checkDob, getNotification };

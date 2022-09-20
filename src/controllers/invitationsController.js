@@ -32,7 +32,6 @@ const sendInvite = async (req, res, next) => {
         }
 
         const group = await groupServices.getGroup(groupid);
-        console.log(group.name)
         const code = await invitationsServices.getInviteCode(req.auth.id, groupid);
         
         if(!code){
