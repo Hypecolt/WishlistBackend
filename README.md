@@ -6,8 +6,6 @@ A wishlist API developed for the Javascript Bootcamp organised by Softbinator Te
 
 ## Documentation
 
-For the first setup it is required to run the `npx prisma db push` command in the terminal, and `CREATE DATABASE <database_name>;` in MySQL Workbench.
-
 You are required to have a `.env` file in the same directory with `index.js` with the following structure:
 
 ```
@@ -18,5 +16,7 @@ TOKEN_KEY=<token_key>
 EMAIL=<gmail_email_address>
 EMAIL_PASS=<gmail_app_password>
 ```
+
+Then run the `npx prisma db push` command in the terminal, and `CREATE DATABASE <database_name>;` in MySQL Workbench.
 
 You also need to create a gmail App specific password for the invite links to be sent through email.
